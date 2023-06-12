@@ -39,7 +39,7 @@ TensorFlow provides a wide range of tools and libraries for building and trainin
 
 Necessary Packages
 We used four libraries in our project which are cv2, numpy, MediaPipe and Tensorflow.
-# import necessary packages for hand gesture recognition project using Python OpenCV
+**import necessary packages for hand gesture recognition project using Python OpenCV**
 
 import cv2
 import numpy as np
