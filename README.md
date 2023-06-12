@@ -393,11 +393,13 @@ Robot rotating clockwise
 ![image](https://github.com/usama-qadoos/Gesture-Recognizing-Robot-ROS2-OpenCV/assets/115080912/0846f443-e68c-4d13-aac7-2bbba3a6eff5)
 
 # Chapter 9: Link to the simulation:
-Here is the link to the video simulation of our project:
-https://drive.google.com/file/d/15pjQLsGIpVXpM1sGEwY-d3IhvSxOmfVM/view?usp=sharing
-Robotics Final Demo 
+
+Demo Video
 
 
+
+
+https://github.com/usama-qadoos/Gesture-Recognizing-Robot-ROS2-OpenCV/assets/115080912/791c7d24-7fc1-4988-9cf1-79ae7cecbc5e
 
 
 
