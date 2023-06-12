@@ -1,8 +1,8 @@
 
-**Chapter 1: Overview**
+# Chapter 1: Overview
 
 
-# Introduction
+**Introduction**
 
 Computer vision is a resource-intensive task because it involves processing and analyzing large amounts of data in real-time to extract meaningful information from images and video. This requires significant processing power and memory, as well as specialized hardware such as graphics processing units (GPUs) to accelerate the computational workload. Onboard computer vision systems, which are used in a variety of applications including self-driving vehicles and drones, have additional constraints and requirements that can make them even more resource intensive.
 Instead of using a costly Convolutional Neural Network (CNN) that processes an entire image at once, we can use a more cost-effective and faster deep neural network (DNN) that detects key points of hand gestures to detect the pose. This method is more efficient and can reduce the computational burden and cost of implementing a CNN. We are using a pre-trained machine learning model based on Keras.
@@ -35,7 +35,7 @@ TensorFlow provides a wide range of tools and libraries for building and trainin
 
 
 
-**Chapter 2: Workflow of Hand Gesture Recognition Model**
+# Chapter 2: Workflow of Hand Gesture Recognition Model
 
 Necessary Packages
 We used four libraries in our project which are cv2, numpy, MediaPipe and Tensorflow.
@@ -49,7 +49,7 @@ from tensorflow.keras.models import load_model
 
 **Use of Media Pipe**
 The Mp.solution.hands module is responsible for performing the hand recognition algorithm. An object is created to store this module, which is called mpHands. The mpHands.Hands method is used to configure the model, with the first argument being the maximum number of hands that the model will detect in a single frame. MediaPipe is capable of detecting multiple hands in a single frame, but this particular project is set up to only detect one hand at a time. The Mp.solutions.drawing_utils module is also used to draw the detected key points of the hand, rather than having to draw them manually. Finally, Tensorflow is initialized to use these features.
-# initialize mediapipe
+**initialize mediapipe**
 mpHands = mp.solutions.hands
 hands = mpHands.Hands(max_num_hands=1, min_detection_confidence=0.7)
 mpDraw = mp.solutions.drawing_utils
@@ -57,10 +57,10 @@ mpDraw = mp.solutions.drawing_utils
 **Use of Tensorflow**
 To use the TensorFlow pre-trained model for hand gesture recognition, the load_model function is called to load the model. The gesture.names file contains the names of the different gesture classes, and can be opened using the built-in open function in Python. The contents of the file can then be read using the read() function. This allows us to access the names of the gesture classes, which can be used to label the gestures that are detected by the model.
 
-# Load the gesture recognizer model
+**Load the gesture recognizer model**
 model = load_model('mp_hand_gesture')
 
-# Load class names
+**Load class names**
 f = open('gesture.names', 'r')
 classNames = f.read().split('\n')
 f.close()
@@ -68,34 +68,34 @@ print(classNames)
 
 **Frame Reading using CV2**
 To access the webcam and read the video frames, we create a VideoCapture object and pass an argument of '0', which is the camera ID of the system. In this case, there is only one webcam connected to the system. If you have multiple webcams, you may need to change the argument to the appropriate camera ID. Otherwise, you can leave it as the default value. The cap.read() function is then used to read each frame from the webcam, and the cv2.flip() function is used to flip the frame if desired. The cv2.imshow() function is used to display the frame on a new OpenCV window, and the cv2.waitKey() function keeps the window open until the 'q' key is pressed.
-# Initialize the webcam for Hand Gesture Recognition Python project
+Initialize the webcam for Hand Gesture Recognition Python project
 cap = cv2.VideoCapture(0)
 
 while True:
-  # Read each frame from the webcam
+  **Read each frame from the webcam**
   _, frame = cap.read()
 x , y, c = frame.shape
 
-  # Flip the frame vertically
+  **Flip the frame vertically**
   frame = cv2.flip(frame, 1)
-  # Show the final output
+  **Show the final output**
   cv2.imshow("Output", frame)
   if cv2.waitKey(1) == ord('q'):
     		break
 
-# release the webcam and destroy all active windows
+**release the webcam and destroy all active windows**
 cap.release()
 cv2.destroyAllWindows()
 
 **Detection of Hand Key points**
 MediaPipe works with RGB images, but OpenCV reads images in the BGR format. Therefore, we use the cv2.cvtCOLOR() function to convert the frame to the RGB format. The process function takes an RGB frame as input and returns a result class. We then use the result.multi_hand_landmarks method to check if any hands have been detected in the frame. If there are any detections, we loop through each detection and store the coordinates in a list called landmarks. The image height and width are multiplied by the result because the model returns a normalized result, with values between 0 and 1. Finally, the mpDraw.draw_landmarks() function is used to draw all of the landmarks on the frame.
 framergb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-  # Get hand landmark prediction
+  **Get hand landmark prediction**
   result = hands.process(framergb)
 
   className = ''
 
-  # post process the result
+  **post process the result**
   if result.multi_hand_landmarks:
     	landmarks = []
     	for handslms in result.multi_hand_landmarks:
@@ -112,13 +112,13 @@ mpHands.HAND_CONNECTIONS)
 
 **Recognizing the Hand Gestures**
 The model.predict() function takes a list of landmarks as input and returns an array containing 10 prediction classes for each landmark. The output of this function will be an array with shape (1, 10), where each element represents the probability that the landmark belongs to each of the 10 classes. To determine the most likely class for each landmark, we can use the np.argmax() function, which returns the index of the maximum value in the list. Once we have the index, we can use it to retrieve the corresponding class name from the classNames list. Finally, we can use the cv2.putText function to display the detected gesture on the frame.
-# Predict gesture in Hand Gesture Recognition project
+**Predict gesture in Hand Gesture Recognition project**
         	prediction = model.predict([landmarks])
 print(prediction)
         	classID = np.argmax(prediction)
         	className = classNames[classID]
 
-  # show the prediction on the frame
+  **show the prediction on the frame**
   cv2.putText(frame, className, (10, 50), cv2.FONT_HERSHEY_SIMPLEX,
                	1, (0,0,255), 2, cv2.LINE_AA)
 
@@ -142,7 +142,7 @@ Catkin workspaces are an important part of the ROS ecosystem, as they provide a 
 For this project, we created our catkin_ws and created 2 packages. One package was for our turtlebot3 and the other for the controlling of our robot.
 
 
-**Chapter 4: Setting up Turtlebot3**
+# Chapter 4: Setting up Turtlebot3**
 
 **Installing ROS**
 
@@ -178,7 +178,7 @@ $ cd ~/catkin_ws/src/
 $ git clone -b kinetic-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 $ cd ~/catkin_ws && catkin_make
 
-**Chapter 5: Creating Node on ROS**
+# Chapter 5: Creating Node on ROS
 
 After installation of Packages, we will now form our node. Following command was used to install the package:
 Catkin_create_pkg robo rospy roscpp geometry_msgs
@@ -222,7 +222,7 @@ ROS 1 has the ability to run and execute the python script but it runs cpp scrip
 
 
 
-**Chapter 6: Node Code**
+# Chapter 6: Node Code
 
 **Subscriber and Publisher**
 
@@ -239,45 +239,45 @@ import mediapipe as mp
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 
-# initialize mediapipe
+**initialize mediapipe**
 mpHands = mp.solutions.hands
 hands = mpHands.Hands(max_num_hands=1, min_detection_confidence=0.7)
 mpDraw = mp.solutions.drawing_utils
 
 
-# Load the gesture recognizer model
+**Load the gesture recognizer model**
 model = load_model('mp_hand_gesture')
 
-# Load class names
+**Load class names**
 f = open('gesture.names', 'r')
 classNames = f.read().split('\n')
 f.close()
 print(classNames)
 
 
-# Initialize the webcam
+**Initialize the webcam**
 cap = cv2.VideoCapture(0)
 
-# Set up the publisher and subscriber
+**Set up the publisher and subscriber**
 pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
 
-# Initialize the ROS node
+**Initialize the ROS node**
 rospy.init_node('node1')
 
-# Define the callback function for the subscriber
+**Define the callback function for the subscriber**
 def twist_callback(twist_msg):
-# Do something with the twist message here
+**Do something with the twist message here**
     print(twist_msg)
 rospy.Subscriber('/cmd_vel', Twist,twist_callback)
-# Define a twist message and set the linear and angular velocities
+**Define a twist message and set the linear and angular velocities**
 twist = Twist()
 
 
 twist.linear.x = 0.5
 twist.angular.z = 0.0
 
-# Publish the twist message at a rate of 10 Hz
+**Publish the twist message at a rate of 10 Hz**
 rate = rospy.Rate(10)
 while not rospy.is_shutdown():
 
@@ -347,13 +347,13 @@ while not rospy.is_shutdown():
 
     pub.publish(twist)
     rate.sleep()
-# release the webcam and destroy all active windows
+**release the webcam and destroy all active windows**
 cap.release()
 
 cv2.destroyAllWindows()
 
 
-**Chapter 7: Block Diagram of our project**
+# Chapter 7: Block Diagram of our project
 
 
 By default, the turtlebot3 subscribes the cmd_val topic to get all movement commands. We, therefore, create our own node that publishes movement commands in form of "twist messages" to this topic, after processing the webcam feed to identify the gesture. These messages then get routed to our turtlebot for linear and angular movements.
@@ -375,7 +375,7 @@ By default, the turtlebot3 subscribes the cmd_val topic to get all movement comm
 
 
 
-**Chapter 8: Simulation**
+# Chapter 8: Simulation
 Here is the working of our project where a gesture moves our robot in Gazebo. Here are a few case scenarios.
 
  
@@ -392,7 +392,7 @@ Robot rotating anti-clockwise
 Robot rotating clockwise
 ![image](https://github.com/usama-qadoos/Gesture-Recognizing-Robot-ROS2-OpenCV/assets/115080912/0846f443-e68c-4d13-aac7-2bbba3a6eff5)
 
-**Chapter 9: Link to the simulation:**
+# Chapter 9: Link to the simulation:
 Here is the link to the video simulation of our project:
 https://drive.google.com/file/d/15pjQLsGIpVXpM1sGEwY-d3IhvSxOmfVM/view?usp=sharing
 Robotics Final Demo 
@@ -419,7 +419,7 @@ Robotics Final Demo
 
 
 
-**Chapter 10: Conclusion**
+# Chapter 10: Conclusion
 
 In this project, we used OpenCV, TensorFlow, and MediaPipe to detect hand gestures from a webcam input and use these gestures to control a Turtlebot robot through ROS. Specifically, we are using OpenCV to process the video frames from the webcam and identify hand gestures, TensorFlow to apply machine learning techniques to classify the gestures, and MediaPipe to handle the real-time processing of the video stream. We are then using publisher and subscriber nodes in ROS to communicate with the Turtlebot and send it commands based on the identified hand gestures.
 
@@ -444,7 +444,7 @@ In this project, we used OpenCV, TensorFlow, and MediaPipe to detect hand gestur
 
 
 
-**Chapter 11: References**
+# Chapter 11: References
 
 1-	Real-time hand gesture recognition using TensorFlow & OpenCV
 https://techvidvan.com/tutorials/hand-gesture-recognition-tensorflow-opencv/
