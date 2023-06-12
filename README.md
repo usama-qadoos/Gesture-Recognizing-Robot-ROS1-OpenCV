@@ -2,7 +2,7 @@
 **Chapter 1: Overview**
 
 
-**Introduction**
+# Introduction
 
 Computer vision is a resource-intensive task because it involves processing and analyzing large amounts of data in real-time to extract meaningful information from images and video. This requires significant processing power and memory, as well as specialized hardware such as graphics processing units (GPUs) to accelerate the computational workload. Onboard computer vision systems, which are used in a variety of applications including self-driving vehicles and drones, have additional constraints and requirements that can make them even more resource intensive.
 Instead of using a costly Convolutional Neural Network (CNN) that processes an entire image at once, we can use a more cost-effective and faster deep neural network (DNN) that detects key points of hand gestures to detect the pose. This method is more efficient and can reduce the computational burden and cost of implementing a CNN. We are using a pre-trained machine learning model based on Keras.
